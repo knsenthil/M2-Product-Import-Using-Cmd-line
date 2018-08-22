@@ -18,7 +18,7 @@ class InstallSchema implements InstallSchemaInterface
         $tableName = $installer->getTable('bms_product_import');
         // Check if the table already exists
         if ($installer->getConnection()->isTableExists($tableName) != true) {
-            // Create tutorial_simplenews table
+            // Create bms_product_import table
             $table = $installer->getConnection()
                 ->newTable($tableName)
                 ->addColumn(
@@ -35,16 +35,16 @@ class InstallSchema implements InstallSchemaInterface
                 )
 				->addColumn(
                     'start_time',
-                    Table::TYPE_DATETIME,
+                    \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
                     null,
-                    ['nullable' => false],
+                    ['nullable' => false,'default' => \Magento\Framework\DB\Ddl\Table::TIMESTAMP_INIT],
                     'Start At'
                 )
 				->addColumn(
                     'end_time',
-                    Table::TYPE_DATETIME,
+                    \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
                     null,
-                    ['nullable' => false],
+                    ['nullable' => false,'default' => \Magento\Framework\DB\Ddl\Table::TIMESTAMP_INIT_UPDATE],
                     'End At'
                 )
 				->addColumn(
@@ -70,17 +70,10 @@ class InstallSchema implements InstallSchemaInterface
                 )
 				 ->addColumn(
                     'status',
-                    Table::TYPE_SMALLINT,
+                     Table::TYPE_INTEGER,
                     null,
                     ['nullable' => false, 'default' => '0'],
-                    'Status'
-                )
-				->addColumn(
-                    'summary',
-                    Table::TYPE_TEXT,
-                    null,
-                    ['nullable' => false, 'default' => ''],
-                    'Summary'
+					'Total Inserted Records;'
                 )
                 ->setComment('Product Import Table')
                 ->setOption('type', 'InnoDB')
